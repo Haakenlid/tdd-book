@@ -1,0 +1,2 @@
+#! /bin/bash
+python functional_tests.py
