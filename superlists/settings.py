@@ -36,6 +36,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
+INSTALLED_APPS += (
+    'lists',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
