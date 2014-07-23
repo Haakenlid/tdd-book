@@ -1,2 +1,3 @@
-Chapter 5. Saving User Input
-http://chimera.labs.oreilly.com/books/1234000000754/ch05.html
+
+Chapter 6. Getting to the Minimum Viable Site
+http://chimera.labs.oreilly.com/books/1234000000754/ch06.html
