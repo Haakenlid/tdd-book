@@ -1,10 +1,10 @@
 """ Functional tests for the to-do list app based on user story. """
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerCase
 
 
-class NewvisitorTest(LiveServerTestCase):
+class NewvisitorTest(StaticLiveServerCase):
 
     WEBDRIVER = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
     # WEBDRIVER = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
