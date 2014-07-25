@@ -6,9 +6,24 @@ from django.test import LiveServerTestCase
 
 class NewvisitorTest(LiveServerTestCase):
 
+    WEBDRIVER = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
+    # WEBDRIVER = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
+    # WEBDRIVER = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
+
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
+        if self.WEBDRIVER == 'Firefox':
+            selenium_firefox_profile = webdriver.FirefoxProfile(
+                '/home/haakenlid/.mozilla/firefox/selenium-profile')
+            self.browser = webdriver.Firefox(
+                firefox_profile=selenium_firefox_profile)
+        elif self.WEBDRIVER == 'Chrome':
+            self.browser = webdriver.Chrome()
+        elif self.WEBDRIVER == 'PhantomJS':
+            # self.browser = webdriver.PhantomJS()  # Ubuntu version.
+            self.browser = webdriver.PhantomJS(
+                executable_path='/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs')
+        # print('using %s webdriver' % self.WEBDRIVER)
+        self.browser.implicitly_wait(1)
 
     def tearDown(self):
         self.browser.quit()
@@ -58,8 +73,8 @@ class NewvisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         # Now a new user, Francis, comes along to the site.
-        self.browser.quit()
-        self.browser = webdriver.Firefox()
+        self.tearDown()
+        self.setUp()
 
         # Francis visits the home page. There is no sign of Edith's list.
         self.browser.get(self.live_server_url)
@@ -83,3 +98,25 @@ class NewvisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep.
+
+    def test_a_layout_and_styling(self):
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She notices the input box is nicely centered
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
+
+        # She starts a new list and sees the input is nicely ceintered there too.
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
