@@ -26,26 +26,25 @@ on Ubuntu:
 
 ## Folder structure:
 
-/srv
-└── SITENAME
-    ├── database
-    ├── source
-    │   ├── deployment_tools
-    │   ├── functional_tests
-    │   ├── lists
-    │   │   ├── migrations
-    │   │   ├── static
-    │   │   └── templates
-    │   └── superlists
-    ├── static
-    │   └── bootstrap
-    │       ├── css
-    │       ├── fonts
-    │       └── js
-    └── venv
-        └── SITENAME
-            ├── bin
-            ├── include
-            ├── lib
-            └── share
-
+    /srv
+    └── SITENAME
+        ├── database
+        ├── source
+        │   ├── deployment_tools
+        │   ├── functional_tests
+        │   ├── lists
+        │   │   ├── migrations
+        │   │   ├── static
+        │   │   └── templates
+        │   └── superlists
+        ├── static
+        │   └── bootstrap
+        │       ├── css
+        │       ├── fonts
+        │       └── js
+        └── venv
+            └── SITENAME
+                ├── bin
+                ├── include
+                ├── lib
+                └── share
