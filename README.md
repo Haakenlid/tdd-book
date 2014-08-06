@@ -28,7 +28,7 @@ This repo is a django project following the book
 
 8) [~~Testing Deployment Using a Staging Site~~](http://chimera.labs.oreilly.com/books/1234000000754/ch08.html)
 
-9) [Automating Deployment with Fabric](http://chimera.labs.oreilly.com/books/1234000000754/ch09.html)
+9) [~~Automating Deployment with Fabric~~](http://chimera.labs.oreilly.com/books/1234000000754/ch09.html)
 
 10) [Input Validation and Test Organisation](http://chimera.labs.oreilly.com/books/1234000000754/ch10.html)
 
