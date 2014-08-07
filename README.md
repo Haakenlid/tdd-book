@@ -32,7 +32,7 @@ This repo is a django project following the book
 
 10) [~~Input Validation and Test Organisation~~](http://chimera.labs.oreilly.com/books/1234000000754/ch10.html)
 
-11) [A Simple Form](http://chimera.labs.oreilly.com/books/1234000000754/ch11.html)
+11) [A Simple Form](http://chimera.labs.oreilly.com/books/1234000000754/ch11.html )
 
 12) [More Advanced Forms](http://chimera.labs.oreilly.com/books/1234000000754/ch12.html)
 
