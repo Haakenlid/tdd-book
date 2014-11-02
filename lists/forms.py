@@ -8,9 +8,9 @@ DUPLICATE_ITEM_ERROR = "You've already got this in your list"
 
 class ItemForm(forms.models.ModelForm):
 
-    def save(self, for_list):
-        self.instance.list = for_list
-        return super().save()
+    # def save(self, for_list):
+    #     self.instance.list = for_list
+    #     return super().save()
 
     class Meta:
         model = Item
