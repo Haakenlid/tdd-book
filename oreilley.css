@@ -1,19 +1,18 @@
-@media screen and (max-width: 800px){
-  tr td:nth-child(odd){
+@media screen and (max-width: 800px) {
+  .navheader>table>tbody>tr td:nth-child(odd) {
     display: none;
     width: 0%;
   }
-  tr td:nth-child(even){
+  .navheader>table>tbody>tr td:nth-child(even) {
     width: 100%;
   }
-
   pre {
-    font-size: 70%!important;
+    font-size: 70% !important;
   }
-
   section {
     margin: 0;
     width: 100%;
     padding: 0px 20px 20px 20px;
-
+  }
 }
+
