@@ -34,9 +34,9 @@ This repo is a django project following the book
 
 11) [~~A Simple Form~~](http://chimera.labs.oreilly.com/books/1234000000754/ch11.html )
 
-12) [More Advanced Forms](http://chimera.labs.oreilly.com/books/1234000000754/ch12.html)
+12) [~~More Advanced Forms~~](http://chimera.labs.oreilly.com/books/1234000000754/ch12.html)
 
-13) [Dipping Our Toes, Very Tentatively, into JavaScript](http://chimera.labs.oreilly.com/books/1234000000754/ch13.html)
+13) [~~Dipping Our Toes, Very Tentatively, into JavaScript~~](http://chimera.labs.oreilly.com/books/1234000000754/ch13.html)
 
 14) [Deploying Our New Code](http://chimera.labs.oreilly.com/books/1234000000754/ch14.html)
 
