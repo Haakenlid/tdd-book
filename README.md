@@ -38,7 +38,7 @@ This repo is a django project following the book
 
 13) [~~Dipping Our Toes, Very Tentatively, into JavaScript~~](http://chimera.labs.oreilly.com/books/1234000000754/ch13.html)
 
-14) [Deploying Our New Code](http://chimera.labs.oreilly.com/books/1234000000754/ch14.html)
+14) [~~Deploying Our New Code~~](http://chimera.labs.oreilly.com/books/1234000000754/ch14.html)
 
 ###III. [More Advanced Topics](http://chimera.labs.oreilly.com/books/1234000000754/pt03.html)
 
