@@ -36,7 +36,6 @@ class FunctionalTest(StaticLiveServerCase):
             # self.browser = webdriver.PhantomJS()  # Ubuntu version.
             self.browser = webdriver.PhantomJS(
                 executable_path='/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs')
-        # print('using %s webdriver' % self.WEBDRIVER)
         self.browser.implicitly_wait(1)
 
     def tearDown(self):

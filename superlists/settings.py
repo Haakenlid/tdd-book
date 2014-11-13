@@ -38,6 +38,7 @@ INSTALLED_APPS = (
 
 INSTALLED_APPS += (
     'lists',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,3 +85,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+STATICFILES_DIRS = (
+    os.path.abspath(os.path.join(BASE_DIR, 'superlists/static')),
+)
