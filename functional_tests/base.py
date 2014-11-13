@@ -6,9 +6,9 @@ from django.contrib.staticfiles.testing import StaticLiveServerCase
 
 class FunctionalTest(StaticLiveServerCase):
 
-    WEBDRIVER = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
+    # WEBDRIVER = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
     # WEBDRIVER = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
-    # WEBDRIVER = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
+    WEBDRIVER = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
 
     @classmethod
     def setUpClass(cls):
