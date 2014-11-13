@@ -19,10 +19,14 @@ SECRET_KEY = 't_j#jgbvjvyc2(bzhb+6l%+vu&07^fo$6&dw8w+w67)2pjdx1+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
+
+# Authentication
+AUTH_USER_MODEL = 'accounts.ListUser'
+AUTHENTICATION_BACKENDS = (
+    'accounts.authentication.PersonaAuthenticationBackend',
+)
 
 
 # Application definition
@@ -38,6 +42,8 @@ INSTALLED_APPS = (
 
 INSTALLED_APPS += (
     'lists',
+    'accounts',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
