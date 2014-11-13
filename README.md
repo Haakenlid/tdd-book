@@ -42,7 +42,7 @@ This repo is a django project following the book
 
 ###III. [More Advanced Topics](http://chimera.labs.oreilly.com/books/1234000000754/pt03.html)
 
-15) [User Authentication, Integrating Third-Party Plugins,](http://chimera.labs.oreilly.com/books/1234000000754/ch15.html)
+15) [~~User Authentication, Integrating Third-Party Plugins~~](http://chimera.labs.oreilly.com/books/1234000000754/ch15.html)
 
 16) [Server-Side Authentication and Mocking in Python](http://chimera.labs.oreilly.com/books/1234000000754/ch16.html)
 
