@@ -44,7 +44,7 @@ This repo is a django project following the book
 
 15) [~~User Authentication, Integrating Third-Party Plugins~~](http://chimera.labs.oreilly.com/books/1234000000754/ch15.html)
 
-16) [Server-Side Authentication and Mocking in Python](http://chimera.labs.oreilly.com/books/1234000000754/ch16.html)
+16) [~~Server-Side Authentication and Mocking in Python~~](http://chimera.labs.oreilly.com/books/1234000000754/ch16.html)
 
 17) [Test Fixtures, Logging, and Server-Side Debugging](http://chimera.labs.oreilly.com/books/1234000000754/ch17.html)
 
