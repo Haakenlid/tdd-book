@@ -32,17 +32,18 @@ class LoginTest(FunctionalTest):
         self.assertIn('edith@mockmyid.com', navbar.text)
 
     def switch_to_new_window(self, text_in_title):
-        retries = 10
+        retries = 20
         while retries > 0:
             for handle in self.browser.window_handles:
                 self.browser.switch_to_window(handle)
                 if text_in_title in self.browser.title:
                     return
+            print(self.browser.title)
             retries -= 1
             time.sleep(0.5)
         self.fail('could not find window "{}"'.format(text_in_title))
 
     def wait_for_element_with_id(self, element_id):
-        WebDriverWait(self.browser, timeout=5).until(
+        WebDriverWait(self.browser, timeout=10).until(
             lambda b: b.find_element_by_id(element_id)
         )
