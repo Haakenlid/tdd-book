@@ -10,6 +10,9 @@
     <nav class="navbar navbar-default" role="navigation">
       <a href="/" class="navbar-brand">Superlists</a>
       {% if user.email %}
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'my_lists' user.email %}">My lists</a></li>
+        </ul>
         <a href="{% url 'logout' %}" class="btn navbar-brn navbar-right" id="id_logout">Log out</a>
         <span class="navbar-text navbar-right">Logged in as {{ user.email }}</span>
       {% else %}
@@ -20,24 +23,36 @@
 			<div class="col-md-6 col-md-offset-3 jumbotron">
 				<div class="text-center">
 					<h1>{% block header_text %}{% endblock %}</h1>
-					<form method="POST" action="{% block form_action %}{% endblock %}">
-						{% csrf_token %}
-						{{ form.text }}
-						{% if form.errors %}
-							<div class="form-group has-error">
-								<span class="help-block">{{ form.text.errors }}</span>
-							</div>
-						{% endif %}
-					</form>
+
+          {% block list_form %}
+            <form method="POST" action="{% block form_action %}{% endblock %}">
+              {% csrf_token %}
+              {{ form.text }}
+              {% if form.errors %}
+                <div class="form-group has-error">
+                  <span class="help-block">{{ form.text.errors }}</span>
+                </div>
+              {% endif %}
+            </form>
+          {% endblock list_form %}
+
 				</div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				{% block table %}
 				{% endblock table %}
 			</div>
 		</div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {% block extra_content %}
+        {% endblock extra_content %}
+      </div>
+    </div>
 	</div>
   <script src="http://code.jquery.com/jquery.min.js"></script>
   <script src="http://login.persona.org/include.js"></script>
