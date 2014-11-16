@@ -3,3 +3,4 @@
 gunicorn==19.1.0
 ipython==2.1.0
 requests
+django-extensions
