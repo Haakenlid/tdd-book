@@ -48,7 +48,7 @@ This repo is a django project following the book
 
 17) [~~Test Fixtures, Logging, and Server-Side Debugging~~](http://chimera.labs.oreilly.com/books/1234000000754/ch17.html)
 
-18) [Finishing "My Lists": Outside-In TDD](http://chimera.labs.oreilly.com/books/1234000000754/ch18.html)
+18) [~~Finishing "My Lists": Outside-In TDD~~](http://chimera.labs.oreilly.com/books/1234000000754/ch18.html)
 
 19) [Test Isolation, and "Listening to Your Tests"](http://chimera.labs.oreilly.com/books/1234000000754/ch19.html)
 
