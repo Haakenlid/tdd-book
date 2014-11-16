@@ -1,14 +1,16 @@
 """ Functional tests for the to-do list app based on user story. """
 import sys
+import time
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 from django.contrib.staticfiles.testing import StaticLiveServerCase
 
 
 class FunctionalTest(StaticLiveServerCase):
 
-    # WEBDRIVER = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
-    WEBDRIVER = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
-    # WEBDRIVER = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
+    test_browser = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
+    # test_browser = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
+    # test_browser = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
 
     @classmethod
     def setUpClass(cls):
@@ -25,14 +27,14 @@ class FunctionalTest(StaticLiveServerCase):
             super().tearDownClass()
 
     def setUp(self):
-        if self.WEBDRIVER == 'Firefox':
+        if self.test_browser == 'Firefox':
             selenium_firefox_profile = webdriver.FirefoxProfile(
                 '/home/haakenlid/.mozilla/firefox/selenium-profile')
             self.browser = webdriver.Firefox(
                 firefox_profile=selenium_firefox_profile)
-        elif self.WEBDRIVER == 'Chrome':
+        elif self.test_browser == 'Chrome':
             self.browser = webdriver.Chrome()
-        elif self.WEBDRIVER == 'PhantomJS':
+        elif self.test_browser == 'PhantomJS':
             # self.browser = webdriver.PhantomJS()  # Ubuntu version.
             self.browser = webdriver.PhantomJS(
                 executable_path='/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs')
@@ -48,3 +50,41 @@ class FunctionalTest(StaticLiveServerCase):
 
     def get_item_input_box(self):
         return self.browser.find_element_by_id('id_text')
+
+    def wait_to_be_logged_in(self, email):
+        self.wait_for_element_with_id('id_logout')
+        navbar = self.browser.find_element_by_css_selector('.navbar')
+        self.assertIn(email, navbar.text)
+
+    def wait_to_be_logged_out(self, email):
+        self.wait_for_element_with_id('id_login')
+        navbar = self.browser.find_element_by_css_selector('.navbar')
+        self.assertNotIn(email, navbar.text)
+
+    def wait_for_element_with_id(self, element_id):
+        WebDriverWait(self.browser, timeout=10).until(
+            lambda b: b.find_element_by_id(element_id),
+            'could not find element with id "{}". Page content was \n{}'.format(
+                element_id,
+                self.browser.find_element_by_tag_name('body').text,
+            ),
+        )
+
+    def switch_to_new_window(self, text_in_title):
+        retries = 20
+        while retries > 0:
+            page_titles = []
+            for handle in self.browser.window_handles:
+                self.browser.switch_to_window(handle)
+                # print(self.browser.title)
+                if text_in_title in self.browser.title:
+                    return
+                page_titles.append(self.browser.title)
+            retries -= 1
+            time.sleep(0.5)
+        self.fail(
+            'could not find window "{}". Pages are \n{}'.format(
+                text_in_title,
+                page_titles,
+            )
+        )
