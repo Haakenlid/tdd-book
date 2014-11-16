@@ -6,6 +6,7 @@ from accounts.authentication import (
 )
 from django.contrib.auth import get_user_model
 User = get_user_model()
+import logging
 
 
 @patch('accounts.authentication.requests.post')
@@ -48,6 +49,21 @@ class AuthenticateTest(TestCase):
         found_user = self.backend.authenticate('an assertion')
         new_user = User.objects.get(email=email)
         self.assertEqual(found_user, new_user)
+
+    def test_logs_non_okay_responses_from_persona(self, mock_post):
+        response_json = {
+            'status': 'not okay', 'reason': 'eg, audience mismatch',
+        }
+        mock_post.return_value.ok = True
+        mock_post.return_value.json.return_value = response_json
+
+        logger = logging.getLogger('accounts.authentication')
+        with patch.object(logger, 'warning') as mock_log_warning:
+            self.backend.authenticate('an assertion')
+
+        mock_log_warning.assert_called_once_with(
+            'Persona says no. Json was: {}'.format(response_json)
+        )
 
 
 class GetUserTest(TestCase):

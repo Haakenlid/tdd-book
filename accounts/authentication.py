@@ -1,28 +1,34 @@
 import requests
-import logging
 from django.contrib.auth import get_user_model
 from django.conf import settings
 # import sys
 PERSONA_VERIFY_URL = 'https://verifier.login.persona.org/verify'
 User = get_user_model()
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class PersonaAuthenticationBackend(object):
 
     def authenticate(self, assertion):
-        logging.warning('entering authenticate function')
         response = requests.post(
             PERSONA_VERIFY_URL,
             data={'assertion': assertion, 'audience': settings.DOMAIN},
         )
-        logging.warning('got response for persona.')
-        logging.warning(response.content.decode())
         if response.ok and response.json().get('status') == 'okay':
             email = response.json().get('email')
+            logger.info(
+                'Persona says yes. email: {}'.format(email)
+            )
             try:
                 return User.objects.get(email=email)
             except User.DoesNotExist:
                 return User.objects.create(email=email)
+        else:
+            logger.warning(
+                'Persona says no. Json was: {}'.format(response.json())
+            )
 
     def get_user(self, email):
         try:

@@ -13,13 +13,15 @@ from .management.commands.create_session import create_pre_authenticated_session
 
 class MyListsTest(FunctionalTest):
 
+    # test_browser = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
+
     def create_pre_authenticated_session(self, email):
         if self.against_staging:
             session_key = create_session_on_server(self.server_host, email)
         else:
             session_key = create_pre_authenticated_session(email)
-        ## to set a cookie we need to first visit the domain.
-        ## 404 pages load the quickest!
+        # to set a cookie we need to first visit the domain.
+        # 404 pages load the quickest!
         self.browser.get(self.server_url + '/404_no_such_url/')
         self.browser.add_cookie(dict(
             name=settings.SESSION_COOKIE_NAME,
@@ -39,4 +41,3 @@ class MyListsTest(FunctionalTest):
 
         self.browser.get(self.server_url)
         self.wait_to_be_logged_in(email)
-

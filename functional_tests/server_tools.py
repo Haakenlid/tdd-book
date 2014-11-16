@@ -10,10 +10,10 @@ def create_session_on_server(host, email):
             'fab',
             'create_session_on_server:email={}'.format(email),
             '--host={}'.format(host),
-            '--hide=everything, status',
+            '--hide=everything,status',
         ],
         cwd=THIS_FOLDER,
-    ).decode().strip()
+    ).decode().strip().split('\n')[0]
     return session_key
 
 

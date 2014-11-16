@@ -46,7 +46,7 @@ This repo is a django project following the book
 
 16) [~~Server-Side Authentication and Mocking in Python~~](http://chimera.labs.oreilly.com/books/1234000000754/ch16.html)
 
-17) [Test Fixtures, Logging, and Server-Side Debugging](http://chimera.labs.oreilly.com/books/1234000000754/ch17.html)
+17) [~~Test Fixtures, Logging, and Server-Side Debugging~~](http://chimera.labs.oreilly.com/books/1234000000754/ch17.html)
 
 18) [Finishing "My Lists": Outside-In TDD](http://chimera.labs.oreilly.com/books/1234000000754/ch18.html)
 
