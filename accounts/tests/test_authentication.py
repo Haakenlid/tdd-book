@@ -1,7 +1,8 @@
 from django.test import TestCase
+from django.conf import settings
 from unittest.mock import patch
 from accounts.authentication import (
-    PERSONA_VERIFY_URL, DOMAIN, PersonaAuthenticationBackend
+    PERSONA_VERIFY_URL, PersonaAuthenticationBackend
 )
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -20,7 +21,7 @@ class AuthenticateTest(TestCase):
         self.backend.authenticate('xxx')
         mock_post.assert_called_once_with(
             PERSONA_VERIFY_URL,
-            data={'assertion': 'xxx', 'audience': DOMAIN},
+            data={'assertion': 'xxx', 'audience': settings.DOMAIN},
         )
 
     def test_returns_none_if_response_errors(self, mock_post):

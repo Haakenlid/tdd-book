@@ -17,9 +17,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 't_j#jgbvjvyc2(bzhb+6l%+vu&07^fo$6&dw8w+w67)2pjdx1+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DOMAIN = 'localhost'
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [DOMAIN, ]
 
 # authentication and user
 AUTH_USER_MODEL = 'accounts.User'
@@ -42,6 +43,7 @@ INSTALLED_APPS += (
     'lists',
     'accounts',
     'django_extensions',
+    'functional_tests',
 )
 
 MIDDLEWARE_CLASSES = (
