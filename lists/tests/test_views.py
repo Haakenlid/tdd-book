@@ -1,19 +1,19 @@
 """ Unit tests for the superlists app. """
-from unittest.mock import Mock, patch
 from django.test import TestCase
 from django.http import HttpRequest
 from django.utils.html import escape
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from lists.models import Item, List
-from lists.views import new_list
+from lists.views import new_list, new_list2
 from lists.forms import (
     DUPLICATE_ITEM_ERROR,
     EMPTY_LIST_ERROR,
     ItemForm,
     ExistingListItemForm,
 )
-
+import unittest
+from unittest.mock import patch
 
 class HomePageTest(TestCase):
     maxDiff = None
@@ -94,7 +94,7 @@ class ListViewTest(TestCase):
         self.assertContains(response, 'name="text"')
 
 
-class NewListTest(TestCase):
+class NewListTestIntegratedTest(TestCase):
 
     def test_saving_a_POST_request(self):
         self.client.post(
@@ -156,22 +156,25 @@ class NewListTest(TestCase):
 
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id, ))
 
-    @patch('lists.views.List')
-    def test_list_owner_is_saved_if_user_is_authenticated(self, mockList):
-        mock_list = List.objects.create()
-        mock_list.save = Mock()
-        mockList.return_value = mock_list
-        request = HttpRequest()
+    @unittest.skip
+    def test_list_owner_is_saved_if_user_is_authenticated(self):
+        request= HttpRequest()
         request.user = User.objects.create(email='a@b.com')
         request.POST['text'] = 'new list item'
-
-        def check_owner_assigned():
-            self.assertEqual(mock_list.owner, request.user)
-
-        mock_list.save.side_effect = check_owner_assigned
-
         new_list(request)
-        self.assertEqual(mock_list.owner, request.user)
+        list_ = List.objects.first()
+        self.assertEqual(list_.owner, request.user)
+
+@patch('lists.views.NewListForm')
+class NewListViewUnitTest(unittest.TestCase):
+
+    def setUp(self):
+        self.request = HttpRequest()
+        self.request.POST['text'] = 'new list item'
+
+    def test_passes_POST_data_to_NewListForm(self, mockNewListForm):
+        new_list2(self.request)
+        mockNewListForm.assert_called_once_with(data=self.request.POST)
 
 
 class MyListsTests(TestCase):
@@ -186,3 +189,4 @@ class MyListsTests(TestCase):
         correct_user = User.objects.create(email='correct@user.com')
         response = self.client.get('/lists/users/correct@user.com/')
         self.assertEqual(response.context['owner'], correct_user)
+

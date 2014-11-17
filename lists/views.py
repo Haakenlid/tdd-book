@@ -1,7 +1,7 @@
 """ Views of list app. Visitors can view and create lists and listitems. """
 from django.shortcuts import render, redirect
 from .models import List
-from .forms import ItemForm, ExistingListItemForm
+from .forms import ItemForm, ExistingListItemForm, NewListForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -32,6 +32,8 @@ def new_list(request):
     else:
         return render(request, 'home.html', {'form': form})
 
+def new_list2(request):
+    NewListForm(data=request.POST)
 
 def my_lists(request, email):
     owner = User.objects.get(email=email)
