@@ -40,7 +40,6 @@ class MyListsTest(FunctionalTest):
         list_items = [
             'Reticulate splines',
             'Immanentize eschaton',
-            'Click cows',
         ]
         self.browser.get(self.server_url)
         self.get_item_input_box().send_keys(list_items[0] + '\n')
@@ -56,6 +55,7 @@ class MyListsTest(FunctionalTest):
         self.assertEqual(self.browser.current_url, first_list_url)
 
         # She decides to start another list, just to see.
+        list_items.append('Click cows')
         self.browser.get(self.server_url)
         self.get_item_input_box().send_keys(list_items[2] + '\n')
         second_list_url = self.browser.current_url
