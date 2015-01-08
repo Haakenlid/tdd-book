@@ -31,7 +31,11 @@ class FunctionalTest(StaticLiveServerCase):
             super().tearDownClass()
 
     def setUp(self):
-        print('Functional test: {test}\nBrowser: {browser}'.format(test=type(self).__name__, browser=self.test_browser))
+        print('\n{test_name:<80} ({browser})  '.format(
+            test_name=' '.join(self.id().split('.')[-2:]),
+            browser=self.test_browser,
+        ))
+
         if self.against_staging:
             reset_database(self.server_host)
 

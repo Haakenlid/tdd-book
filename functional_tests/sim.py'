@@ -1,0 +1,12 @@
+def sim(str0, str1):
+
+
+"a b" "ab"  True
+"a b" "a_b" True
+"a b" "a-b" True
+"ab"  "a_b" False
+"ab"  "a-b" False
+"a_b" "ab"  False
+"a_b" "a-b" False
+"a-b" "ab"  False
+"a-b" "a_b" False
