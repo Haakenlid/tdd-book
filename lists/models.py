@@ -10,12 +10,15 @@ class List(models.Model):
         null=True,
     )
 
-    def get_absolute_url(self):
-        return reverse('view_list', args=[self.id])
-
     @property
     def name(self):
-        return self.item_set.first().text
+        if self.item_set:
+            return self.item_set.first().text
+        else:
+            return 'empty list {pk}'.format(self.pk)
+
+    def get_absolute_url(self):
+        return reverse('view_list', args=[self.id])
 
 
 class Item(models.Model):

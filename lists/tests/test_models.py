@@ -3,7 +3,6 @@ from django.test import TestCase
 from lists.models import Item, List
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-
 User = get_user_model()
 
 
@@ -54,7 +53,7 @@ class ListModelTest(TestCase):
         self.assertIn(list_, user.list_set.all())
 
     def test_list_owner_is_optional(self):
-        List.objects.create()  # should not raise
+        List.objects.create()  # should not raise error
 
     def test_list_name_is_first_item_text(self):
         list_ = List.objects.create()
