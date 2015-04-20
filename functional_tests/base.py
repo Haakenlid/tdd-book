@@ -13,7 +13,7 @@ SCREEN_DUMP_LOCATION = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'screendumps')
 FIREFOX_PROFILE_PATH = '/home/haakenlid/.mozilla/firefox/selenium-profile'
 PHANTOM_JS_BIN_PATH = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
-DEFAULT_WAIT = 10
+DEFAULT_WAIT = 5
 
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -114,7 +114,7 @@ class FunctionalTest(StaticLiveServerTestCase):
             except (AssertionError, WebDriverException):
                 time.sleep(0.1)
             # one more try, which will raise any errors if they are outstanding
-            return function_with_assertion()
+        return function_with_assertion()
 
     def wait_to_be_logged_in(self, email):
         self.wait_for_element_with_id('id_logout')
