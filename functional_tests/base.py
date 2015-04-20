@@ -1,10 +1,17 @@
 """ Functional tests for the to-do list app based on user story. """
 import sys
+import os
 import time
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from .server_tools import reset_database
+
+SCREEN_DUMP_LOCATION = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 'screendumps')
+FIREFOX_PROFILE_PATH = '/home/haakenlid/.mozilla/firefox/selenium-profile'
+PHANTOM_JS_BIN_PATH = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
 
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -41,20 +48,53 @@ class FunctionalTest(StaticLiveServerTestCase):
 
         if self.test_browser == 'Firefox':
             self.browser = webdriver.Firefox()
-            # selenium_firefox_profile = webdriver.FirefoxProfile(
-            #     '/home/haakenlid/.mozilla/firefox/selenium-profile')
-            # self.browser = webdriver.Firefox(
-            #     firefox_profile=selenium_firefox_profile)
+            # selenium_firefox_profile = webdriver.FirefoxProfile(FIREFOX_PROFILE_PATH)
+            # self.browser = webdriver.Firefox(firefox_profile=selenium_firefox_profile)
         elif self.test_browser == 'Chrome':
             self.browser = webdriver.Chrome()
         elif self.test_browser == 'PhantomJS':
-            # self.browser = webdriver.PhantomJS()  # Ubuntu version.
             self.browser = webdriver.PhantomJS(
-                executable_path='/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs')
+                executable_path=PHANTOM_JS_BIN_PATH)
         self.browser.implicitly_wait(1)
 
     def tearDown(self):
+        if self._test_has_failed():
+            if not os.path.exists(SCREEN_DUMP_LOCATION):
+                os.makedirs(SCREEN_DUMP_LOCATION)
+            for ix, handle in enumerate(self.browser.window_handles):
+                self._windowid = ix
+                self.browser.switch_to_window(handle)
+                self.take_screenshot()
+                self.dump_html()
         self.browser.quit()
+        super().tearDown()
+
+    def _test_has_failed(self):
+        for method, error in self._outcome.errors:
+            if error:
+                return True
+        return False
+
+    def _get_filename(self):
+        timestamp = datetime.now().isoformat().replace(':', '.')[:19]
+        return '{folder}/{classname}.{method}-window{windowid}-{timestamp}'.format(
+            folder=SCREEN_DUMP_LOCATION,
+            classname=self.__class__.__name__,
+            method=self._testMethodName,
+            windowid=self._windowid,
+            timestamp=timestamp,
+        )
+
+    def take_screenshot(self):
+        filename = self._get_filename() + '.png'
+        print('screenshotting to', filename)
+        self.browser.get_screenshot_as_file(filename)
+
+    def dump_html(self):
+        filename = self._get_filename() + '.html'
+        print('dumping page HTML to', filename)
+        with open(filename, 'w') as f:
+            f.write(self.browser.page_source)
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
