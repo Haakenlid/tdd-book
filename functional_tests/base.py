@@ -49,9 +49,9 @@ class FunctionalTest(StaticLiveServerTestCase):
             reset_database(self.server_host)
 
         if self.test_browser == 'Firefox':
-            self.browser = webdriver.Firefox()
-            # selenium_firefox_profile = webdriver.FirefoxProfile(FIREFOX_PROFILE_PATH)
-            # self.browser = webdriver.Firefox(firefox_profile=selenium_firefox_profile)
+            # firefox_profile = webdriver.FirefoxProfile(FIREFOX_PROFILE_PATH)
+            firefox_profile = webdriver.FirefoxProfile()
+            self.browser = webdriver.Firefox(firefox_profile=firefox_profile)
         elif self.test_browser == 'Chrome':
             self.browser = webdriver.Chrome()
         elif self.test_browser == 'PhantomJS':
