@@ -52,7 +52,7 @@ This repo is a django project following the book
 
 19) [~~Test Isolation, and "Listening to Your Tests"~~](http://chimera.labs.oreilly.com/books/1234000000754/ch19.html)
 
-20) [Continuous Integration (CI)](http://chimera.labs.oreilly.com/books/1234000000754/ch20.html)
+20) [~~Continuous Integration (CI)~~](http://chimera.labs.oreilly.com/books/1234000000754/ch20.html)
 
 21) [The Token Social Bit, the Page Pattern, and an Exercise for the Reader](http://chimera.labs.oreilly.com/books/1234000000754/ch21.html)
 
