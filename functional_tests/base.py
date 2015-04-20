@@ -13,7 +13,7 @@ SCREEN_DUMP_LOCATION = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'screendumps')
 FIREFOX_PROFILE_PATH = '/home/haakenlid/.mozilla/firefox/selenium-profile'
 PHANTOM_JS_BIN_PATH = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
-DEFAULT_WAIT = 10
+DEFAULT_WAIT = 5
 
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -57,7 +57,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         elif self.test_browser == 'PhantomJS':
             self.browser = webdriver.PhantomJS(
                 executable_path=PHANTOM_JS_BIN_PATH)
-        self.browser.implicitly_wait(1)
+        self.browser.implicitly_wait(DEFAULT_WAIT)
 
     def tearDown(self):
         if self._test_has_failed():
