@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import WebDriverException
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from .server_tools import reset_database
 
@@ -12,6 +13,7 @@ SCREEN_DUMP_LOCATION = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'screendumps')
 FIREFOX_PROFILE_PATH = '/home/haakenlid/.mozilla/firefox/selenium-profile'
 PHANTOM_JS_BIN_PATH = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
+DEFAULT_WAIT = 10
 
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -104,6 +106,16 @@ class FunctionalTest(StaticLiveServerTestCase):
     def get_item_input_box(self):
         return self.browser.find_element_by_id('id_text')
 
+    def wait_for(self, function_with_assertion, timeout=DEFAULT_WAIT):
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            try:
+                return function_with_assertion()
+            except (AssertionError, WebDriverException):
+                time.sleep(0.1)
+            # one more try, which will raise any errors if they are outstanding
+            return function_with_assertion()
+
     def wait_to_be_logged_in(self, email):
         self.wait_for_element_with_id('id_logout')
         navbar = self.browser.find_element_by_css_selector('.navbar')
@@ -115,7 +127,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.assertNotIn(email, navbar.text)
 
     def wait_for_element_with_id(self, element_id):
-        WebDriverWait(self.browser, timeout=10).until(
+        WebDriverWait(self.browser, timeout=DEFAULT_WAIT).until(
             lambda b: b.find_element_by_id(element_id),
             'could not find element with id "{}". Page content was \n{}'.format(
                 element_id,
