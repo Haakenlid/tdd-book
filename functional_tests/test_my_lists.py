@@ -59,12 +59,12 @@ class MyListsTest(FunctionalTest):
         # She decides to start another list, just to see.
         list_items.append('Click cows')
         self.browser.get(self.server_url)
-        self.get_item_input_box().send_keys(list_items[2] + '\n')
+        self.get_item_input_box().send_keys(list_items[-1] + '\n')
         second_list_url = self.browser.current_url
 
         # Under "my lists" , her new list appears.
         self.browser.find_element_by_link_text('My lists').click()
-        self.browser.find_element_by_link_text(list_items[2]).click()
+        self.browser.find_element_by_link_text(list_items[-1]).click()
         self.wait_for(
             lambda: self.assertEqual(self.browser.current_url, second_list_url)
         )
