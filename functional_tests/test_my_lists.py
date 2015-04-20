@@ -15,7 +15,7 @@ TEST_EMAIL = 'edith@example.com'
 
 class MyListsTest(FunctionalTest):
 
-    test_browser = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
+    test_browser = 'Firefox'  # PhantomJS(faster) or Chrome or Firefox
 
     def create_pre_authenticated_session(self, email):
         if self.against_staging:

@@ -6,7 +6,7 @@ TEST_EMAIL = 'edith@mockmyid.com'
 
 class LoginTest(FunctionalTest):
 
-    test_browser = 'Chrome'
+    test_browser = 'Firefox'
 
     def test_login_with_persona(self):
         # Edith goes to the awesome superlists site
