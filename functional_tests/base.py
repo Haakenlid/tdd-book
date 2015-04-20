@@ -3,11 +3,11 @@ import sys
 import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from .server_tools import reset_database
 
 
-class FunctionalTest(StaticLiveServerCase):
+class FunctionalTest(StaticLiveServerTestCase):
 
     test_browser = 'PhantomJS'  # PhantomJS(faster) or Chrome or Firefox
     # test_browser = 'Chrome'  # PhantomJS(faster) or Chrome or Firefox
