@@ -7,12 +7,15 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from .server_tools import reset_database
+from django.conf import settings
+
+from .server_tools import reset_database, create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
 
 SCREEN_DUMP_LOCATION = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'screendumps')
-FIREFOX_PROFILE_PATH = '/home/haakenlid/.mozilla/firefox/selenium-profile'
-PHANTOM_JS_BIN_PATH = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
+FIREFOX_PROFILE = '/home/haakenlid/.mozilla/firefox/selenium-profile'
+PHANTOM_JS_BIN = '/home/haakenlid/node_modules/phantomjs/lib/phantom/bin/phantomjs'
 DEFAULT_WAIT = 5
 
 
@@ -39,25 +42,42 @@ class FunctionalTest(StaticLiveServerTestCase):
         if cls.server_url == cls.live_server_url:
             super().tearDownClass()
 
+    def create_pre_authenticated_session(self, email):
+        if self.against_staging:
+            session_key = create_session_on_server(self.server_host, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
+        # to set a cookie we need to first visit the domain.
+        # 404 pages load the quickest!
+        self.browser.get(self.server_url + '/404_no_such_url/')
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session_key,
+            path='/',
+        ))
+
+    def get_default_browser(self):
+        if self.test_browser == 'Firefox':
+            # firefox_profile = webdriver.FirefoxProfile(FIREFOX_PROFILE)
+            firefox_profile = webdriver.FirefoxProfile()
+            browser = webdriver.Firefox(firefox_profile=firefox_profile)
+        elif self.test_browser == 'Chrome':
+            browser = webdriver.Chrome()
+        elif self.test_browser == 'PhantomJS':
+            browser = webdriver.PhantomJS(executable_path=PHANTOM_JS_BIN)
+        browser.implicitly_wait(DEFAULT_WAIT)
+        return browser
+
     def setUp(self):
         print('\n{test_name:<80} ({browser})  '.format(
             test_name=' '.join(self.id().split('.')[-2:]),
             browser=self.test_browser,
         ))
 
+        self.browser = self.get_default_browser()
+
         if self.against_staging:
             reset_database(self.server_host)
-
-        if self.test_browser == 'Firefox':
-            # firefox_profile = webdriver.FirefoxProfile(FIREFOX_PROFILE_PATH)
-            firefox_profile = webdriver.FirefoxProfile()
-            self.browser = webdriver.Firefox(firefox_profile=firefox_profile)
-        elif self.test_browser == 'Chrome':
-            self.browser = webdriver.Chrome()
-        elif self.test_browser == 'PhantomJS':
-            self.browser = webdriver.PhantomJS(
-                executable_path=PHANTOM_JS_BIN_PATH)
-        self.browser.implicitly_wait(DEFAULT_WAIT)
 
     def tearDown(self):
         if self._test_has_failed():
