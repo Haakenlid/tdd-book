@@ -27,6 +27,27 @@ class HomePageTest(TestCase):
         self.assertIsInstance(response.context['form'], ItemForm)
 
 
+class ShareListTest(TestCase):
+
+    def test_post_redirects_to_list_page(self):
+        list_ = List.objects.create()
+        response = self.client.post(
+            '/lists/%d/share/' % list_.id,
+            data={'email': 'user@example.com'}
+        )
+        self.assertRedirects(response, '/lists/%d/' % (list_.id,))
+
+    def test_list_is_shared_with_user(self):
+        list_ = List.objects.create()
+        share_with = 'friend@example.com'
+        recipient = User.objects.create(email=share_with)
+        self.client.post(
+            '/lists/%d/share/' % list_.id,
+            data={'email': share_with}
+        )
+        self.assertIn(recipient, list_.shared_with.all())
+
+
 class ListViewTest(TestCase):
 
     def post_invalid_input(self):

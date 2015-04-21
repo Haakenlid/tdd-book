@@ -1,13 +1,17 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
-
+from django.contrib.auth import get_user_model
 
 class List(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
+    )
+    shared_with = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='shared_lists',
     )
 
     @property
@@ -19,6 +23,11 @@ class List(models.Model):
 
     def get_absolute_url(self):
         return reverse('view_list', args=[self.id])
+
+    def share(self, email):
+        User = get_user_model()
+        recipient, _ = User.objects.get_or_create(email=email)
+        self.shared_with.add(recipient)
 
 
 class Item(models.Model):

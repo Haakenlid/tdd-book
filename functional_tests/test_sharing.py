@@ -18,7 +18,7 @@ def quit_if_possible(browser):
 
 class SharingTest(FunctionalTest):
 
-    def test_logged_in_users_lists_are_saved_as_my_lists(self):
+    def test_sharing_list_with_friends(self):
         # Edith is a ligged-in user.
         self.create_pre_authenticated_session(FIRST_EMAIL)
         edith_browser = self.browser
@@ -27,6 +27,7 @@ class SharingTest(FunctionalTest):
         # Her friend Onni is also hanging out on the lists site.
         onni_browser = self.get_default_browser()
         self.addCleanup(lambda: quit_if_possible(onni_browser))
+        self.browser = onni_browser
         self.create_pre_authenticated_session(SECOND_EMAIL)
 
         # Edith goes to the home page and starts a list.
