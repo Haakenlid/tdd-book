@@ -54,6 +54,6 @@ This repo is a django project following the book
 
 20) [~~Continuous Integration (CI)~~](http://chimera.labs.oreilly.com/books/1234000000754/ch20.html)
 
-21) [The Token Social Bit, the Page Pattern, and an Exercise for the Reader](http://chimera.labs.oreilly.com/books/1234000000754/ch21.html)
+21) [~~The Token Social Bit, the Page Pattern, and an Exercise for the Reader~~](http://chimera.labs.oreilly.com/books/1234000000754/ch21.html)
 
 22) [Fast Tests, Slow Tests, and Hot Lava](http://chimera.labs.oreilly.com/books/1234000000754/ch22.html)
